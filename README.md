@@ -29,6 +29,15 @@ Chrome blocks `.crx` files that don't come from the Chrome Web Store (it rejects
 
 The extension checks for new releases and shows a banner in the popup when an update is ready - grab the new zip and load it the same way.
 
+**Brave and other Chromium browsers that accept sideloaded CRXs**
+
+1. Download `youtube-downloader-*-chrome.crx`
+2. Open `brave://extensions`
+3. Turn on **Developer mode**
+4. Drag the `.crx` file onto the extensions page and confirm the installation
+
+If your Chromium browser rejects the CRX, use the Chrome zip instructions above instead.
+
 **Firefox**
 
 1. In Firefox, click the `youtube-downloader-*-firefox.xpi` link on the Releases page
