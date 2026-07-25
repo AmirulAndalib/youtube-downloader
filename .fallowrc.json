@@ -1,5 +1,19 @@
 {
   "$schema": "https://raw.githubusercontent.com/getfallow/fallow/main/schema/fallowrc.json",
+  "entry": [
+    "layers/*/entrypoints/*.content.ts",
+    "layers/*/entrypoints/*/index.ts",
+    "layers/*/entrypoints/*/index.content.ts",
+    "layers/*/entrypoints/*/main.ts",
+    "layers/*/layer.config.ts"
+  ],
+  "ignoreUnresolvedImports": [
+    "#imports",
+    "#background/**/*.svelte",
+    "#popup/**/*.svelte",
+    "#processing/**/*.svelte",
+    "#youtube/**/*.svelte"
+  ],
   "ignoreDependencies": [
     "@ffmpeg/core",
     "@ffmpeg/util",
