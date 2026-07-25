@@ -7,8 +7,8 @@ import {
   resolveDownloadFilename
 } from "./build-mux-job";
 import { runMuxVideoAudio } from "./ffmpeg-instance";
+import { OPFS_MUX_OUTPUT_SUFFIX } from "./opfs-constants";
 import { addToPlaylistBundle } from "./playlist-bundle";
-import { OPFS_MUX_OUTPUT_SUFFIX } from "@/entrypoints/mux-worker/opfs-output-fs";
 import { ProgressType } from "@/types";
 import type { Prettify, ProcessStreamData } from "@/types";
 

@@ -27,7 +27,10 @@ const sharedPermissions: Browser.runtime.ManifestPermission[] = [
 export default defineConfig({
   srcDir: "src",
   publicDir: "src/public",
-  modules: ["@wxt-dev/module-svelte"],
+  modules: ["@wxt-dev/module-svelte", "wxt-module-layers"],
+  layers: {
+    sources: ["layers/background", "layers/popup", "layers/processing", "layers/youtube"]
+  },
   manifestVersion: 3,
   manifest: ({ browser }) => ({
     name: "YouTube Downloader",
