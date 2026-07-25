@@ -1,6 +1,7 @@
 import { registerOffscreenMessageListeners } from "./offscreen-message-listeners";
 import { handleWorkerMessage, WORKER_MESSAGE_PREFIX, type WorkerMessage } from "./worker-message-handler";
 import { initMuxWorker } from "@/lib/download-pipeline/ffmpeg-instance";
+import { sweepOrphanedOpfsFiles } from "@/lib/download-pipeline/opfs-constants";
 import { browser } from "#imports";
 
 addEventListener("message", e => {
@@ -19,6 +20,8 @@ addEventListener("message", e => {
 });
 
 registerOffscreenMessageListeners();
+
+await sweepOrphanedOpfsFiles();
 
 const wasmBinary = await (await fetch(
   browser.runtime.getURL("/ffmpeg/ffmpeg-core.wasm")

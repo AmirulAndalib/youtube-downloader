@@ -59,25 +59,30 @@ export async function processVideoAudio({ item, isCancelled }: ProcessVideoAudio
     hasExtraTracks: additionalAudioTracks.length > 0
   });
 
-  const outputFile = await runMuxVideoAudio({
-    videoId,
-    job: {
-      videoData: item.videoFile ? null : toOwnedArrayBuffer(videoData!),
-      videoFile: item.videoFile,
-      audioTracks,
-      subtitleTracks: buildSubtitleFiles(subtitleTracks),
-      videoMimeType,
-      audioMimeType,
+  const videoStreamName = item.videoFile?.name;
+
+  let outputFile: File;
+  try {
+    outputFile = await runMuxVideoAudio({
       videoId,
-      tabId,
-      defaultAudioTrackIndex: defaultAudioTrackIndex ?? 0,
-      filenameOutput
+      job: {
+        videoData: item.videoFile ? null : toOwnedArrayBuffer(videoData!),
+        videoFile: item.videoFile,
+        audioTracks,
+        subtitleTracks: buildSubtitleFiles(subtitleTracks),
+        videoMimeType,
+        audioMimeType,
+        videoId,
+        tabId,
+        defaultAudioTrackIndex: defaultAudioTrackIndex ?? 0,
+        filenameOutput
+      }
+    });
+  } finally {
+    if (videoStreamName) {
+      const root = await navigator.storage.getDirectory();
+      await root.removeEntry(videoStreamName).catch(() => {});
     }
-  });
-  const hasVideoFile = Boolean(item.videoFile);
-  if (hasVideoFile) {
-    const root = await navigator.storage.getDirectory();
-    await root.removeEntry(item.videoFile!.name).catch(() => {});
   }
 
   const isDownloadCancelled = isCancelled();

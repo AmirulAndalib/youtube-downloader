@@ -1,4 +1,4 @@
-const VIDEO_STREAM_SUFFIX = "-video-stream";
+import { OPFS_VIDEO_STREAM_SUFFIX } from "@/lib/download-pipeline/opfs-constants";
 
 export class OPFSVideoWriter {
   private writable: FileSystemWritableFileStream | null = null;
@@ -8,7 +8,7 @@ export class OPFSVideoWriter {
   constructor(videoId: string) {
     this.writeQueue = (async () => {
       const root = await navigator.storage.getDirectory();
-      this.handle = await root.getFileHandle(videoId + VIDEO_STREAM_SUFFIX, { create: true });
+      this.handle = await root.getFileHandle(videoId + OPFS_VIDEO_STREAM_SUFFIX, { create: true });
       this.writable = await this.handle.createWritable();
     })();
   }
@@ -22,12 +22,5 @@ export class OPFSVideoWriter {
     await this.writeQueue;
     await this.writable!.close();
     return this.handle!;
-  }
-
-  static async cleanup(videoId: string) {
-    try {
-      const root = await navigator.storage.getDirectory();
-      await root.removeEntry(videoId + VIDEO_STREAM_SUFFIX);
-    } catch { /* no-op */ }
   }
 }
